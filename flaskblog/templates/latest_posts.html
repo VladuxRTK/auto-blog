@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block dropdown%}
+{% for category in categories %}
+  <a class="dropdown-item" href="{{url_for('dropdown',category=category)}}">{{category}}</a>
+ {% endfor %}
+{% endblock %}
+{% block content %}
+    {% set count = 0 %}
+    {% for post in posts if count < 3 %}
+        <article  class="media content-section">
+          <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="{{url_for('user_posts',username = post.author.username)}}">{{ post.author.username }}</a>
+                {% if post.category == "Auto News" %}
+                  <a class="mr-2" href="{{ url_for('auto_news')}}">{{ post.category }}</a>
+                {% elif post.category == "Reviews" %}
+                  <a class="mr-2" href="{{ url_for('reviews')}}">{{ post.category }}</a>
+                {% else %}
+                  <a class="mr-2" href="{{ url_for('tutorials')}}">{{ post.category }}</a>
+                {% endif %}
+              <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+            </div>
+            <h2 class = "post-title"><a class="article-title" href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h2>
+            <p class="article-content">{{ post.content }}</p>
+          </div>
+        </article>
+    {% set count = count + 1 %}
+    {% endfor %}
+    
+    <script>
+         $('.fullBackground').fullClip({
+      images: ['https://images.hdqwalls.com/download/bmw-220i-cabrio-luxury-line-2017-4k-rm-1920x1080.jpg', 'https://wallpapercave.com/wp/wp1859650.jpg'],
+      transitionTime: 2000,
+      wait: 5000
+    });
+    </script>
+
+{% endblock content %}
+

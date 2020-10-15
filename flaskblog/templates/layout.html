@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+   <!--   <script
+    src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
+      <script
+    src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static',filename='fullclip.min.js')}} ""></script>
+
+    <style>
+      .content-section{
+        background-color: rgba(0,0,0,0.5);
+      }
+      .article-title{
+        color: white;
+      }
+      .article-content{
+        color: white;
+
+      }
+      .form-control-label{
+        color: white;
+      }
+      .form-check-label{
+        color:white;
+      }
+      legend{
+        color: white;
+      }
+
+      .navbar-fixed-top {height: 20px;}
+      .navbar-brand img {height: 30px;}
+     
+    </style>
+    
+   
+
+    {% if title %}
+        <title>Auto Blog - {{ title }}</title>
+    {% else %}
+        <title>Auto Blog</title>
+    {% endif %}
+</head>
+<body>
+    <div class = fullBackground></div>
+     
+    <header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <div class="container">
+
+          <a class="navbar-brand mr-4" href="/"><img id="icon" src="static/favicons/bmw.png">Auto Blog</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarToggle">
+            <div class="navbar-nav mr-auto">
+              <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
+              <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
+          <!--     <a class="nav-item nav-link" href="{{ url_for('auto_news') }}">Auto News</a>
+              <a class="nav-item nav-link" href="{{ url_for('reviews') }}">Reviews</a>
+              <a class="nav-item nav-link" href="{{ url_for('tutorials') }}">Tutorials</a> -->
+
+     <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown
+        </button>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          {%block dropdown %}{% endblock %}
+          <!-- <a class="dropdown-item" href="{{url_for('dropdown',category=category)}}">{{category}}</a> -->
+          
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+            </div>
+            <!-- Navbar Right Side -->
+            <div class="navbar-nav">
+              {% if current_user.is_authenticated %}
+                <a class="nav-item nav-link" href="{{ url_for('new_post') }}">New Post</a>
+                <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
+                <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+              {% else %}
+                <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
+                <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
+              {% endif %}
+               <form class="form-inline my-2 my-lg-0"  method="GET" action ="search">
+      
+        
+          
+            <input type = "text" class="form-control" name="query" id = "query" placeholder="Search" aria-label="Search">
+           
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+     
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main role="main" class="container">
+      <div class="row">
+        <div class="col-md-8">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+          {% block content %}{% endblock %}
+        </div>
+        <div class="col-md-4">
+          <div class="content-section">
+            <h3 class = "pageTitles">Our Sidebar</h3>
+            <p class='text-muted'>Useful links.
+              <ul class="list-group">
+                <li class="list-group-item list-group-item-light" ><a href="{{url_for('latest_posts')}}">Latest Posts</a></li>
+                <li class="list-group-item list-group-item-light">Announcements</li>
+              </ul>
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+     
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+   
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script>
+      var imgIcons = ["/static/favicons/bmw.png","/static/favicons/honda.png","/static/favicons/volkswagen.png"]
+     
+       var i =Math.floor(Math.random()*imgIcons.length);
+       
+       console.log(i);
+       $('#icon').attr('src', imgIcons[i])
+
+           
+   
+  
+   
+
+
+
+
+    
+    </script>
+</body>
+</html>

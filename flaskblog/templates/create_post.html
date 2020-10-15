@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% block dropdown%}
+{% for category in categories %}
+  <a class="dropdown-item" href="{{url_for('dropdown',category=category)}}">{{category}}</a>
+ {% endfor %}
+{% endblock %}
+{% block content %}
+
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">{{ legend }}</legend>
+            <div class="form-group">
+                {{ form.title.label(class="form-control-label") }}
+                {% if form.title.errors %}
+                    {{ form.title(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.title.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.title(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.content.label(class="form-control-label") }}
+                {% if form.content.errors %}
+                    {{ form.content(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.content.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.content(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+             <div class="form-group">
+                {{ form.select.label(class="form-control-label") }}
+                {% if form.select.errors %}
+                    {{ form.select(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.select.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.select(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+           
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>
+    
+    <script>
+         $('.fullBackground').fullClip({
+      images: ['https://images.hdqwalls.com/download/bmw-220i-cabrio-luxury-line-2017-4k-rm-1920x1080.jpg', 'https://wallpapercave.com/wp/wp1859650.jpg'],
+      transitionTime: 2000,
+      wait: 5000
+    });
+  </script>
+{% endblock content %}
